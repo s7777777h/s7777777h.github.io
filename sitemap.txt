@@ -1,3 +1,2 @@
-http://example.com/2025/04/06/test_post/
 http://example.com/2025/04/05/hello-world/
 http://example.com/
