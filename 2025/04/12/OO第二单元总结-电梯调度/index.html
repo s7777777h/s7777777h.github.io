@@ -1,0 +1,355 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>OO第二单元总结-电梯调度 | s7777777h's Blog</title><meta name="author" content="s7777777h"><meta name="copyright" content="s7777777h"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="题目回顾第一次题目有 6 部电梯，在某些时间节点，会有一些乘客发出请求：乘坐指定电梯 e，从楼层 x 到楼层 y，且每个乘客有一个优先级 p。当电梯开门，关门，到达任一楼层，乘客进出电梯时，需要输出特定的信息。每一部电梯的移动速度给定，同时电梯的开关门之间有一定的时间间隔。目标是将所有乘客送到目的地（正确性），且使得系统总运行时间，乘客优先级加权等待时间，电梯耗电量（与开关门次数和移动次数有关）最">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OO第二单元总结-电梯调度">
+<meta property="og:url" content="http://s7777777h.github.io/project/2025/04/12/OO%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93-%E7%94%B5%E6%A2%AF%E8%B0%83%E5%BA%A6/index.html">
+<meta property="og:site_name" content="s7777777h&#39;s Blog">
+<meta property="og:description" content="题目回顾第一次题目有 6 部电梯，在某些时间节点，会有一些乘客发出请求：乘坐指定电梯 e，从楼层 x 到楼层 y，且每个乘客有一个优先级 p。当电梯开门，关门，到达任一楼层，乘客进出电梯时，需要输出特定的信息。每一部电梯的移动速度给定，同时电梯的开关门之间有一定的时间间隔。目标是将所有乘客送到目的地（正确性），且使得系统总运行时间，乘客优先级加权等待时间，电梯耗电量（与开关门次数和移动次数有关）最">
+<meta property="og:locale">
+<meta property="og:image" content="http://s7777777h.github.io/project/img/butterfly-icon.png">
+<meta property="article:published_time" content="2025-04-12T12:29:24.000Z">
+<meta property="article:modified_time" content="2025-04-14T17:08:51.056Z">
+<meta property="article:author" content="s7777777h">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://s7777777h.github.io/project/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "OO第二单元总结-电梯调度",
+  "url": "http://s7777777h.github.io/project/2025/04/12/OO%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93-%E7%94%B5%E6%A2%AF%E8%B0%83%E5%BA%A6/",
+  "image": "http://s7777777h.github.io/project/img/butterfly-icon.png",
+  "datePublished": "2025-04-12T12:29:24.000Z",
+  "dateModified": "2025-04-14T17:08:51.056Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "s7777777h",
+      "url": "http://s7777777h.github.io/project/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/project/img/favicon.png"><link rel="canonical" href="http://s7777777h.github.io/project/2025/04/12/OO%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93-%E7%94%B5%E6%A2%AF%E8%B0%83%E5%BA%A6/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/project/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/project/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'OO第二单元总结-电梯调度',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><script defer src="https://cloud.umami.is/script.js" data-website-id="412d1717-458b-4a9d-bbbd-b4f935bba00f"></script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/project/atom.xml" title="s7777777h's Blog" type="application/atom+xml">
+</head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/project/"><span class="site-name">s7777777h's Blog</span></a><a class="nav-page-title" href="/project/"><span class="site-name">OO第二单元总结-电梯调度</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">OO第二单元总结-电梯调度</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-04-12T12:29:24.000Z" title="Created 2025-04-12 20:29:24">2025-04-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-04-14T17:08:51.056Z" title="Updated 2025-04-15 01:08:51">2025-04-15</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="umamiPV" data-path="/project/2025/04/12/OO%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93-%E7%94%B5%E6%A2%AF%E8%B0%83%E5%BA%A6/"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="题目回顾"><a href="#题目回顾" class="headerlink" title="题目回顾"></a>题目回顾</h1><h2 id="第一次题目"><a href="#第一次题目" class="headerlink" title="第一次题目"></a>第一次题目</h2><p>有 6 部电梯，在某些时间节点，会有一些乘客发出请求：乘坐指定电梯 e，从楼层 x 到楼层 y，且每个乘客有一个优先级 p。当<strong>电梯开门，关门，到达任一楼层，乘客进出电梯</strong>时，需要输出特定的信息。每一部电梯的移动速度给定，同时电梯的开关门之间有一定的时间间隔。目标是将所有乘客送到目的地（正确性），且使得系统总运行时间，乘客优先级加权等待时间，电梯耗电量（与开关门次数和移动次数有关）最小化。</p>
+<h2 id="第二次迭代"><a href="#第二次迭代" class="headerlink" title="第二次迭代"></a>第二次迭代</h2><p>乘客<strong>不再指定</strong>乘坐哪一部电梯，而是由系统自行决定。同时，新增临时调度(SCHE) 事件，要求指定电梯以特定移动速度，从楼层 x 移动到楼层 y ，到达 y 后使所有乘客离开，关门并等待一秒，结束临时调度事件。SCHE-BEGIN 必须在输入 SCHE 后短时间内输出（不能有两次 ARRIVE）。临时调度期间不能有 RECEIVE和中间楼层的开关门。 </p>
+<p>同时，新增了 RECEIVE 约束，当将乘客分给某个电梯时，要输出一条分配信息，当电梯没有任何的 RECEIVE 时，电梯不能移动（防止自由竞争策略）。</p>
+<p>RECEIVE 的解除有两种情况：当乘客离开电梯时会解除其的 RECEIVE ；电梯进入 SCHE 事件时会将所有已经 RECEIVE 的人全部解除。当RECEIVE解除后，乘客必须重新分配电梯，同时电梯如果没有RECEIVE任何人，电梯不能移动。</p>
+<h2 id="第三次迭代"><a href="#第三次迭代" class="headerlink" title="第三次迭代"></a>第三次迭代</h2><p>第三次迭代增加了双轿厢升级事件（UPDATE），其指定两个电梯和一个楼层。发出请求后，两个电梯会停止，放出内部的所有人，取消所有人的 RECEIVE ，接下来两个电梯停止一秒后分别传送到共享楼层的上下楼层位置。接下来两个电梯的速度加倍，且两个电梯的楼层移动范围加以限制，均无法越过共享楼层。同时两个电梯加以限制不能相撞。</p>
+<h1 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h1><h2 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h2><p><img src="/2025/04/06/OO%E7%AC%AC%E4%B8%80%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%B1%95%E5%BC%80/%E5%9B%BE.png"></p>
+<h2 id="Sequence-Diagram"><a href="#Sequence-Diagram" class="headerlink" title="Sequence Diagram"></a>Sequence Diagram</h2><p><img src="/2025/04/06/OO%E7%AC%AC%E4%B8%80%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%B1%95%E5%BC%80/%E5%9B%BE.png"></p>
+<blockquote>
+<p>注，此处的 Elevator 泛指六个电梯线程，而 ElevatorA，ElevatorB 主要用来展示 UPDATE 时的线程工作状况。</p>
+</blockquote>
+<h2 id="度量分析"><a href="#度量分析" class="headerlink" title="度量分析"></a>度量分析</h2><p><img src="/2025/04/06/OO%E7%AC%AC%E4%B8%80%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%B1%95%E5%BC%80/%E9%87%8F.png"></p>
+<p><img src="/2025/04/06/OO%E7%AC%AC%E4%B8%80%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%B1%95%E5%BC%80/%E9%87%8F1.png"></p>
+<h1 id="实现方案介绍"><a href="#实现方案介绍" class="headerlink" title="实现方案介绍"></a>实现方案介绍</h1><h2 id="线程-类介绍"><a href="#线程-类介绍" class="headerlink" title="线程&amp;类介绍"></a>线程&amp;类介绍</h2><p>线程分为三部分：输入线程（Main），分配器线程（Distributor），电梯线程（Elevator）。</p>
+<p>采用典型的<strong>生产者-消费者模式</strong>，为托盘建立 waitingList 类，用于存储管理三种类型的 Request。</p>
+<p>每个电梯同时自身含有两个waitingList，一个存储已分配，但尚未进入轿厢的乘客，一个存储轿厢内的乘客。</p>
+<p>输入线程将请求放在托盘里，分配器线程将托盘里的请求根据一定的规则分配到不同的电梯中。</p>
+<p>Tool 类负责一些静态的杂碎工具方法，如将字符串的楼层映射到数字的楼层，以及反转电梯的运行方向等。</p>
+<p>Debug 类只有一个静态方法，返回一个布尔真值，当这个真值为1，程序输出日志，方便调试。</p>
+<p>用于官方包的 PersonRequest 类没有存储当前楼层的成员，故增加 MyRequest 类，用于存储当前楼层。</p>
+<h2 id="分配实现"><a href="#分配实现" class="headerlink" title="分配实现"></a>分配实现</h2><p>由于每个电梯在SCHE和UPDATE事件中为不可分配状态，故需给每一个电梯设立有效位 <code>valid</code>，在分配时，会检查是否所有电梯都无效，如果是就进入 wait 。在电梯的 <code>valid</code> 被置为 1 时，会叫醒分配器，以保证分配可行。</p>
+<p>对于 UPDATE 和 SCHE （以及第一次作业的乘客请求），目标电梯已经指定，所以直接从取出电梯的候乘表，加入并 notify 即可。</p>
+<p>对于需要我们分配的请求，我专门创建了 <code>int xxx_distribute(MyRequest request)</code> 方法。对于一个请求，返回分配给的电梯序号。以封装的方式，<strong>方便切换分配策略</strong>，来比较各种分配策略的优略。</p>
+<p>经过综合考虑，本人的分配策略最终采用了<strong>基于路程的分配策略</strong>，即直接假定电梯做大简谐运动（触顶返回），计算不同电梯距离请求所在楼层的距离，选取距离最小的。</p>
+<blockquote>
+<p>此方法实现简单，且性能相对不劣，但是核心问题在于<strong>容易被卡</strong>，攻击者可以轻易构造一组数据让你的一部电梯RECEIVE所有人。同时该方法相同数据，每次测试的误差较大（我就因为这个性能 RTLE 了一次）</p>
+</blockquote>
+<p><strong>注意：<strong>电梯是否有效需要多次检查，第一次是检查是否有有效电梯，如果没有就 wait ，第二次是分配策略分配只考虑有效电梯，第三次是</strong>分配行为前一条语句要再次检查</strong>。第三条尤为重要，且<strong>务必要将检查和分配套在一个 synchronized 块中，为电梯的 valid 上锁</strong>，否则经常会出现以下的情况：电梯在通过有效性检查进入 if 分支，在正准备分配前一瞬间被设为无效，再分配便会出问题，这是典型的 check-act 竞态条件。</p>
+<h2 id="调度实现"><a href="#调度实现" class="headerlink" title="调度实现"></a>调度实现</h2><h3 id="调度策略"><a href="#调度策略" class="headerlink" title="调度策略"></a>调度策略</h3><p>电梯调度策略整体采用LOOK策略，在细节上做了一点点改动。</p>
+<p>LOOK策略的详细机制我直接搬用 Gemini 2.5 Pro 的介绍。如有需要可以自行参考。</p>
+<blockquote>
+<p>我们可以将 LOOK 策略的运行过程分解为以下步骤：</p>
+<ol>
+<li><strong>确定初始方向：</strong><ul>
+<li>如果电梯当前是空闲的，它会等待第一个请求（来自轿厢内部或楼层按钮），并根据该请求的位置确定初始运行方向。</li>
+<li>如果电梯已经在运行中，它会保持当前方向。</li>
+</ul>
+</li>
+<li><strong>沿当前方向移动：</strong><ul>
+<li>电梯开始沿着确定的方向移动（例如，向上）。</li>
+</ul>
+</li>
+<li><strong>服务同向请求：</strong><ul>
+<li>在移动过程中，电梯会停靠并服务所有满足以下条件的楼层：<ul>
+<li>该楼层有 <strong>轿厢内指令</strong> (乘客在电梯内按下的目标楼层按钮)。</li>
+<li>该楼层有 <strong>与电梯当前运行方向一致的层站呼叫</strong> (例如，电梯向上时，停靠发出向上请求的楼层)。</li>
+</ul>
+</li>
+<li>同时，电梯会记录下所有 <strong>反方向</strong> 的请求，以便在改变方向后处理。</li>
+</ul>
+</li>
+<li><strong>查找并到达转向点 (关键步骤)：</strong><ul>
+<li>电梯持续沿当前方向移动，并不断 “向前看” (Look)。</li>
+<li>它会找到当前方向上 <strong>最远的一个请求</strong> (无论是轿厢内指令还是同向的层站呼叫)。</li>
+<li>当电梯到达这个 <strong>最远请求所在的楼层</strong> 并完成服务后，它会再次检查：在这个楼层之外、更远的地方（沿当前方向）是否还有请求？</li>
+<li><strong>如果没有更远的请求了</strong>，那么这个楼层就是本次单向行程的 <strong>转向点</strong>。电梯就在这里停止继续前进（即使还没到顶层&#x2F;底层）。</li>
+</ul>
+</li>
+<li><strong>改变方向：</strong><ul>
+<li>在转向点，电梯改变其运行方向（例如，从向上变为向下）。</li>
+</ul>
+</li>
+<li><strong>沿新方向移动并服务：</strong><ul>
+<li>电梯开始沿新的方向移动。</li>
+<li>重复步骤 3 和 4：服务新方向上的所有同向请求，并找到新方向上的最远请求点作为下一个转向点。</li>
+</ul>
+</li>
+<li><strong>循环往复：</strong><ul>
+<li>电梯就像一个来回摆动的指针，在上下两个 “最远请求点” 之间来回运行，持续服务所有请求。</li>
+<li>如果没有收到任何请求，电梯会进入空闲状态，等待新的请求。</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<p>我将策略和电梯进行分离，单独建立 Strategy 类，每个电梯都有一个实例化的 Strategy 对象，通过  getAdvice 方法，基于电梯的状态和请求列表，给出电梯相应的指令。分为：<strong>移动，反转移动，开门，关门，等待，临时调度，轿厢升级</strong>七种建议。电梯通过调用相应的功能函数以完成其功能。</p>
+<h3 id="调度的优化"><a href="#调度的优化" class="headerlink" title="调度的优化"></a>调度的优化</h3><p>加权乘客等待时间时课程作业性能评价的一个重要指标。在<strong>最小幅度更改原策略</strong>的原则上，我做了些许改动来适配优先级。</p>
+<p>具体来说，当一个电梯到达任何一个楼层，从 Strategy 得到 OPEN 的指令时，我会将<strong>所有人移出电梯，从电梯外的所有人中选取六个优先级最高的，和电梯运行相同的乘客进入电梯</strong> <del>（我觉得我要被乘客骂死了）</del>。这样能保证对于 LOOK 策略的改动十分小，且不会对电量和总运行时长有较大的影响（理论上会有浮动，但是浮动的期望应当是 0），同时能够尽量满足高优先级的需求。</p>
+<h2 id="双轿厢电梯的实现"><a href="#双轿厢电梯的实现" class="headerlink" title="双轿厢电梯的实现"></a>双轿厢电梯的实现</h2><p> SCHE 的实现与双轿厢电梯较为类似，但更为简单，这里不在赘述。</p>
+<h3 id="双轿厢电梯的启动"><a href="#双轿厢电梯的启动" class="headerlink" title="双轿厢电梯的启动"></a>双轿厢电梯的启动</h3><p>双轿厢的启动其实较为复杂，因为需要保证两个电梯都停下，所有人都出来，且电梯关上了门才可以启动电梯。其核心在于<strong>启动的同步</strong>。这里我设置了主从电梯的概念，用于电梯的启动。由主电梯（选哪个都行）负责输出启动信息。</p>
+<p>具体来说，每一个电梯自身有一个updateReady的标志，但是主从电梯的 updateReady 含义不一样。</p>
+<p><strong>从电梯</strong>：表示已经完成了清空乘客等前置要求，<strong>随时可以升级</strong>。</p>
+<p><strong>主电梯</strong>：表示已经输出了 UPDATE-BEGIN ，已经进入了升级状态，标志着<strong>升级事件的开始</strong>。</p>
+<p>在启动时，从电梯在执行前置操作后，将 updateReady 设置为真，等待主电梯 updateReady，在得到主电梯的 updateReady后，执行真正的升级操作，即取消所有等待乘客的 RECEIVE ，设置速度，顶楼和底层，进行一秒的 sleep。</p>
+<p>主电梯在执行完前置操作后，等待从电梯的 updateReady 为真，再输出 updateReady 为真，接下来的操作和从电梯一样，只是在末尾输出 UPDATE-END。</p>
+<p>电梯的结束同样需要进行上面的同步控制，逻辑几乎相同，这里不再赘述。</p>
+<blockquote>
+<p>PS：结束的同步控制其实我的代码没有做，写博客时才发现有这么个Bug qaq，幸好强测和互测都没出事。</p>
+</blockquote>
+<h3 id="双轿厢电梯的调度"><a href="#双轿厢电梯的调度" class="headerlink" title="双轿厢电梯的调度"></a>双轿厢电梯的调度</h3><p>在双轿厢电梯的迭代中，电梯需要增加顶层和底层两个变量，在分配时，只有 <strong>当前楼层在顶层和底层之间</strong> 才会进行分配。</p>
+<p>如果目标楼层在当前电梯的运行范围内，和往常一样调度即可。</p>
+<p>如果目标楼层不在运行范围内，则将乘客运到共享楼层后。将乘客放回托盘，接下来由调度器分配即可。</p>
+<h3 id="双轿厢电梯的防撞"><a href="#双轿厢电梯的防撞" class="headerlink" title="双轿厢电梯的防撞"></a>双轿厢电梯的防撞</h3><p>电梯的防撞通过给共享楼层加锁实现，为了让锁更加灵活，这里我使用了唯一一处 RetreentLock ,两个电梯共享一把 sharedFloorLock，当电梯无论通过何种方式进入共享楼层之前，都会上锁；电梯无论通过何种方法离开共享楼层，都会解锁。</p>
+<p>为了防止电梯来在共享楼层不走导致另外一个电梯被长期阻塞，我设置了如果电梯内部和外部都没有任务，且在共享楼层，getAdvice 给的建议是 MOVE&#x2F;REVERSE，而不是 WAIT。显然这种情景以外，电梯都会离开。只要给这种情景加特判即可。</p>
+<h2 id="程序的结束"><a href="#程序的结束" class="headerlink" title="程序的结束"></a>程序的结束</h2><p>多线程程序的优雅结束需要线程之间的协作交流，这里展示一下我的结束方式。</p>
+<p>InputThread：下一个输入为空时自然结束</p>
+<p>Distributor：结束需要满足两个条件</p>
+<p>(1) 输入线程结束</p>
+<p>(2) <strong>输入的所有请求被全部完成</strong> - 设立全局共享变量</p>
+<p>Elevator：分配器结束后获得结束许可，在有结束许可，且候乘表和内部为空时结束</p>
+<h2 id="迭代变化总结"><a href="#迭代变化总结" class="headerlink" title="迭代变化总结"></a>迭代变化总结</h2><p>三次作业迭代中<strong>不需要变化</strong>的点：</p>
+<ul>
+<li><p>Elevator 的 move, getOut（使所有乘客出去） 和 getIn（使可以进来的乘客进来） 方法等控制电梯行为逻辑的方法完全不需要变</p>
+</li>
+<li><p>输入线程的主要逻辑不需要变</p>
+</li>
+</ul>
+<p>三次迭代中需要<strong>显著变化</strong>的点</p>
+<ul>
+<li>电梯需要新增 updateEvent 函数和 scheEvent 函数。</li>
+<li>分配器需要增加 xxx_distribute 方法。</li>
+<li>需要对三种 request 进行各自的分配。</li>
+<li>Strategy 中的 getAdvice 需增加两条新的建议，且在升级为双轿厢电梯后要改变开门出客逻辑：即如果乘客的目标不在当前运行楼层，且当前移动到了共享楼层，允许出客。</li>
+</ul>
+<h1 id="多线程安全相关"><a href="#多线程安全相关" class="headerlink" title="多线程安全相关"></a>多线程安全相关</h1><p>第二单元的多线程作业，线程安全相当重要。</p>
+<p>我在自己的代码中几乎全文都用的 synchroinzed 块，只有对共享楼层的加锁使用了 RetreeantLock。我强烈建议大家<strong>不要学习这一行为</strong>，建议大家从最初就使用 RetreeantLock 。它最大的优点是可以自由调整粒度，我可以在一个类的方法中上锁，在另一个类的方法解锁（当然一定要保证上锁后一定会解锁）。这是 synchronized 块做不到的。我的共享楼层加锁就是由于这个原因不得不使用 RetreeantLock，将锁混用实际上时很危险的。</p>
+<p>在加锁时，我遵守的原则是，共享变量读写全加锁，不出现嵌套锁（然而还是有一些隐蔽的导致我Debug非常之久），事实上能满足这些，基本上就不会出现死锁问题和数据冲突问题。</p>
+<p>写方法时，个人不是很建议直接给方法本身加锁，而是给具体某个读写语句和if块加锁，这样精准加锁可以大大提升性能。这样写出来的方法时安全的，就没有必要在调用它时再加锁，防止死锁。</p>
+<h2 id="线程相关经验"><a href="#线程相关经验" class="headerlink" title="线程相关经验"></a>线程相关经验</h2><ul>
+<li>永远永远<strong>不要带锁 sleep</strong> ，sleep 不会释放锁，其他线程会被阻塞的很惨</li>
+<li>锁的范围一定<strong>不要太大</strong>，否则很容易引发死锁和潜在的性能问题</li>
+<li>对于共享变量的读写一定要加锁</li>
+<li>一定要慎重 check - act 的问题，即**<code>if（A） then B</code>** ，如果 A 条件中涉及到一些共享变量，一定要对其加锁</li>
+<li>如无必要，<strong>不要写嵌套锁，不要写嵌套锁，不要写嵌套锁</strong>，尤其注意隐式的嵌套锁（如函数内部有锁，调用的环境也有锁）。写嵌套锁一定要慎重考虑所有情况，保证不会死锁。</li>
+</ul>
+<h1 id="多线程-Debug-相关"><a href="#多线程-Debug-相关" class="headerlink" title="多线程 Debug 相关"></a>多线程 Debug 相关</h1><p>我在这一单元中本地测试出现的 bug 主要是隐藏的嵌套锁导致的死锁。通过<strong>统一使用线程安全的方法，不在方法外套锁可以很好的解决</strong>。</p>
+<p>在 hw6 的强测中，我爆了我 OO 生涯中第一个强测点（希望是最后一个qaq），细究其原因竟是电梯策略较慢导致 RTLE （本地测了4000遍相同的数据发现不是死锁）。我的策略会有些时间上的波动，好多样例都 56s &#x2F; 60s ，偶然出现了一个特别非的卡到了 60s 以上。我还想着保正确性不卷性能，结果性能倒扣我正确性 qaq。</p>
+<p>本单元中我自己总结出了一套丰富的 debug 方法论，如有兴趣可以移步文章 <a href="https://s7777777h.github.io/2025/04/06/%E5%A4%9A%E7%BA%BF%E7%A8%8BDebug%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/">多线程Debug经验分享 | s7777777h’s Blog</a>。</p>
+<h1 id="Unit2-心得体会"><a href="#Unit2-心得体会" class="headerlink" title="Unit2 心得体会"></a>Unit2 心得体会</h1><h2 id="关于层次化设计"><a href="#关于层次化设计" class="headerlink" title="关于层次化设计"></a>关于层次化设计</h2><p>层次化的设计会让整个迭代变得很舒服。通过设计分工明确的方法，可以精确找到每一次迭代自己要做什么，也能让自己少出 bug。</p>
+<p>Unit1 的作业已经能够让我对层次化设计有了成熟的认识，这让我在第二单元的迭代更加如鱼得水，每次的迭代都十分舒适。</p>
+<h2 id="关于线程安全"><a href="#关于线程安全" class="headerlink" title="关于线程安全"></a>关于线程安全</h2><p>线程安全初识感觉非常可怕，十分容易出错，但是在实际编写时，只要心里明白，哪些变量是共享的，然后在读写时注意对其加锁就好。</p>
+<p>每一个函数都设计好，使其线程安全，上层函数就能更好拿它们组装出一个线程安全的上层结构，进而形成线程安全的整体。</p>
+<p>从小处做起，每一步都很重要。</p>
+<blockquote>
+<p>碎碎念</p>
+<p>OOUnit3Unit4强测互测全过OOUnit3Unit4强测互测全过OOUnit3Unit4强测互测全过OOUnit3Unit4强测互测全过OOUnit3Unit4强测互测全过OOUnit3Unit4强测互测全过OOUnit3Unit4强测互测全过OOUnit3Unit4强测互测全过OOUnit3Unit4强测互测全过OOUnit3Unit4强测互测全过OOUnit3Unit4强测互测全过OOUnit3Unit4强测互测全过OOUnit3Unit4强测互测全过OOUnit3Unit4强测互测全过OOUnit3Unit4强测互测全过OOUnit3Unit4强测互测全过OOUnit3Unit4强测互测全过OOUnit3Unit4强测互测全过OOUnit3Unit4强测互测全过</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://s7777777h.github.io/project">s7777777h</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://s7777777h.github.io/project/2025/04/12/OO%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93-%E7%94%B5%E6%A2%AF%E8%B0%83%E5%BA%A6/">http://s7777777h.github.io/project/2025/04/12/OO%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93-%E7%94%B5%E6%A2%AF%E8%B0%83%E5%BA%A6/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/project/img/butterfly-icon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/project/2025/04/06/%E5%A4%9A%E7%BA%BF%E7%A8%8BDebug%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/" title="多线程Debug经验分享"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">多线程Debug经验分享</div></div><div class="info-2"><div class="info-item-1">OO多线程 debug 经验分享前情提要本人4月4日晚上 debug 写到了4月5日凌晨三点，睡前以为修好了bug，在自己评测机上跑了6000组数据，结果第二天起床发现6000组数据中跑出了3个bug，又改到4月5日晚上六点终于改好了（至少跑了3200组数据不成问题）。 这里分享一下这几天 debug 出的心得。 多线程debug - 基础版IntelliJ IDEA 中有一个强力的多线程分析工具 - 转储线程，这个功能可以在运行程序卡死时，查看每个线程的具体情况。我们以最经典的死锁为例。 12345678910public class Main &#123;    public static Object A = new Object();    public static Object B = new Object();    public static void main(String[] args) &#123;        DeadClass C = new DeadClass(A, B);        DeadClass D = new DeadClass(B,...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/project/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/project/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">s7777777h</div><div class="author-info-description"></div><div class="site-data"><a href="/project/archives/"><div class="headline">Articles</div><div class="length-num">3</div></a><a href="/project/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/project/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E5%9B%9E%E9%A1%BE"><span class="toc-number">1.</span> <span class="toc-text">题目回顾</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E9%A2%98%E7%9B%AE"><span class="toc-number">1.1.</span> <span class="toc-text">第一次题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E8%BF%AD%E4%BB%A3"><span class="toc-number">1.2.</span> <span class="toc-text">第二次迭代</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AC%A1%E8%BF%AD%E4%BB%A3"><span class="toc-number">1.3.</span> <span class="toc-text">第三次迭代</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.</span> <span class="toc-text">架构设计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9B%BE"><span class="toc-number">2.1.</span> <span class="toc-text">类图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sequence-Diagram"><span class="toc-number">2.2.</span> <span class="toc-text">Sequence Diagram</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%A6%E9%87%8F%E5%88%86%E6%9E%90"><span class="toc-number">2.3.</span> <span class="toc-text">度量分析</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88%E4%BB%8B%E7%BB%8D"><span class="toc-number">3.</span> <span class="toc-text">实现方案介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B-%E7%B1%BB%E4%BB%8B%E7%BB%8D"><span class="toc-number">3.1.</span> <span class="toc-text">线程&amp;类介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E9%85%8D%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.2.</span> <span class="toc-text">分配实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E5%BA%A6%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.3.</span> <span class="toc-text">调度实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E5%BA%A6%E7%AD%96%E7%95%A5"><span class="toc-number">3.3.1.</span> <span class="toc-text">调度策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E5%BA%A6%E7%9A%84%E4%BC%98%E5%8C%96"><span class="toc-number">3.3.2.</span> <span class="toc-text">调度的优化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E8%BD%BF%E5%8E%A2%E7%94%B5%E6%A2%AF%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.4.</span> <span class="toc-text">双轿厢电梯的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E8%BD%BF%E5%8E%A2%E7%94%B5%E6%A2%AF%E7%9A%84%E5%90%AF%E5%8A%A8"><span class="toc-number">3.4.1.</span> <span class="toc-text">双轿厢电梯的启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E8%BD%BF%E5%8E%A2%E7%94%B5%E6%A2%AF%E7%9A%84%E8%B0%83%E5%BA%A6"><span class="toc-number">3.4.2.</span> <span class="toc-text">双轿厢电梯的调度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E8%BD%BF%E5%8E%A2%E7%94%B5%E6%A2%AF%E7%9A%84%E9%98%B2%E6%92%9E"><span class="toc-number">3.4.3.</span> <span class="toc-text">双轿厢电梯的防撞</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E7%9A%84%E7%BB%93%E6%9D%9F"><span class="toc-number">3.5.</span> <span class="toc-text">程序的结束</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%AD%E4%BB%A3%E5%8F%98%E5%8C%96%E6%80%BB%E7%BB%93"><span class="toc-number">3.6.</span> <span class="toc-text">迭代变化总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9B%B8%E5%85%B3"><span class="toc-number">4.</span> <span class="toc-text">多线程安全相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%BB%8F%E9%AA%8C"><span class="toc-number">4.1.</span> <span class="toc-text">线程相关经验</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B-Debug-%E7%9B%B8%E5%85%B3"><span class="toc-number">5.</span> <span class="toc-text">多线程 Debug 相关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Unit2-%E5%BF%83%E5%BE%97%E4%BD%93%E4%BC%9A"><span class="toc-number">6.</span> <span class="toc-text">Unit2 心得体会</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E5%B1%82%E6%AC%A1%E5%8C%96%E8%AE%BE%E8%AE%A1"><span class="toc-number">6.1.</span> <span class="toc-text">关于层次化设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8"><span class="toc-number">6.2.</span> <span class="toc-text">关于线程安全</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/project/2025/04/12/OO%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93-%E7%94%B5%E6%A2%AF%E8%B0%83%E5%BA%A6/" title="OO第二单元总结-电梯调度">OO第二单元总结-电梯调度</a><time datetime="2025-04-12T12:29:24.000Z" title="Created 2025-04-12 20:29:24">2025-04-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/project/2025/04/06/%E5%A4%9A%E7%BA%BF%E7%A8%8BDebug%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/" title="多线程Debug经验分享">多线程Debug经验分享</a><time datetime="2025-04-06T08:49:05.000Z" title="Created 2025-04-06 16:49:05">2025-04-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/project/2025/04/06/OO%E7%AC%AC%E4%B8%80%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%B1%95%E5%BC%80/" title="OO第一单元总结 - 表达式展开">OO第一单元总结 - 表达式展开</a><time datetime="2025-04-06T08:33:24.000Z" title="Created 2025-04-06 16:33:24">2025-04-06</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 By s7777777h</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.0-b1</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/project/js/utils.js"></script><script src="/project/js/main.js"></script><div class="js-pjax"></div><script>(() => {
+  const option = null
+  const config = {"site_uv":true,"site_pv":true,"page_pv":true,"token":null}
+
+  const runTrack = () => {
+    umami.track(props => ({ ...props, url: window.location.pathname, title: GLOBAL_CONFIG_SITE.title }))
+  }
+
+  const loadUmamiJS = () => {
+    btf.getScript('https://cloud.umami.is/script.js', {
+      'data-website-id': '',
+      'data-auto-track': 'false',
+      ...option
+    }).then(runTrack)
+  }
+
+  const getData = async (isPost) => {
+    const now = Date.now()
+    const keyUrl = isPost ? `&url=${window.location.pathname}` : ''
+    const headerList = { 'Accept': 'application/json' }
+    if (false) headerList['Authorization'] = `Bearer ${config.token}`
+    else headerList['x-umami-api-key'] = config.token
+    const res = await fetch(`https://api.umami.is/v1/websites//stats?startAt=0000000000&endAt=${now}${keyUrl}`, {
+      method: "GET",
+      headers: headerList
+    })
+    return await res.json()
+  }
+
+  const insertData = async () => {
+    try {
+      if (GLOBAL_CONFIG_SITE.pageType === 'post' && config.page_pv) {
+        const pagePV = document.getElementById('umamiPV')
+        if (pagePV) {
+          const data = await getData(true)
+          pagePV.textContent = data.pageviews.value
+        }
+      } else {
+        const data = (config.site_uv || config.site_pv) && await getData()
+        if (config.site_uv) {
+          const siteUV = document.getElementById('umami-site-uv')
+          if (siteUV) siteUV.textContent = data.visitors.value
+        }
+        if (config.site_pv) {
+          const sitePV = document.getElementById('umami-site-pv')
+          if (sitePV) sitePV.textContent = data.pageviews.value
+        }
+      }
+    } catch (e) {
+      console.error('Failed to load Umami Analytics:', e)
+    }
+  }
+
+  btf.addGlobalFn('pjaxComplete', runTrack, 'umami_analytics_run_track')
+  btf.addGlobalFn('pjaxComplete', insertData, 'umami_analytics_insert')
+
+  loadUmamiJS()
+  insertData()
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
