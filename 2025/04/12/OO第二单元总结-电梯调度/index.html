@@ -7,7 +7,7 @@
 <meta property="og:locale">
 <meta property="og:image" content="http://s7777777h.github.io/s7777777h.github.io/img/butterfly-icon.png">
 <meta property="article:published_time" content="2025-04-12T12:29:24.000Z">
-<meta property="article:modified_time" content="2025-04-14T17:08:51.056Z">
+<meta property="article:modified_time" content="2025-04-14T17:36:45.127Z">
 <meta property="article:author" content="s7777777h">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://s7777777h.github.io/s7777777h.github.io/img/butterfly-icon.png"><script type="application/ld+json">{
@@ -17,7 +17,7 @@
   "url": "http://s7777777h.github.io/s7777777h.github.io/2025/04/12/OO%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93-%E7%94%B5%E6%A2%AF%E8%B0%83%E5%BA%A6/",
   "image": "http://s7777777h.github.io/s7777777h.github.io/img/butterfly-icon.png",
   "datePublished": "2025-04-12T12:29:24.000Z",
-  "dateModified": "2025-04-14T17:08:51.056Z",
+  "dateModified": "2025-04-14T17:36:45.127Z",
   "author": [
     {
       "@type": "Person",
@@ -159,7 +159,7 @@
   isToc: true,
   pageType: 'post'
 }</script><script defer src="https://cloud.umami.is/script.js" data-website-id="412d1717-458b-4a9d-bbbd-b4f935bba00f"></script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/s7777777h.github.io/atom.xml" title="s7777777h's Blog" type="application/atom+xml">
-</head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/s7777777h.github.io/"><span class="site-name">s7777777h's Blog</span></a><a class="nav-page-title" href="/s7777777h.github.io/"><span class="site-name">OO第二单元总结-电梯调度</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">OO第二单元总结-电梯调度</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-04-12T12:29:24.000Z" title="Created 2025-04-12 20:29:24">2025-04-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-04-14T17:08:51.056Z" title="Updated 2025-04-15 01:08:51">2025-04-15</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="umamiPV" data-path="/s7777777h.github.io/2025/04/12/OO%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93-%E7%94%B5%E6%A2%AF%E8%B0%83%E5%BA%A6/"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="题目回顾"><a href="#题目回顾" class="headerlink" title="题目回顾"></a>题目回顾</h1><h2 id="第一次题目"><a href="#第一次题目" class="headerlink" title="第一次题目"></a>第一次题目</h2><p>有 6 部电梯，在某些时间节点，会有一些乘客发出请求：乘坐指定电梯 e，从楼层 x 到楼层 y，且每个乘客有一个优先级 p。当<strong>电梯开门，关门，到达任一楼层，乘客进出电梯</strong>时，需要输出特定的信息。每一部电梯的移动速度给定，同时电梯的开关门之间有一定的时间间隔。目标是将所有乘客送到目的地（正确性），且使得系统总运行时间，乘客优先级加权等待时间，电梯耗电量（与开关门次数和移动次数有关）最小化。</p>
+</head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/s7777777h.github.io/"><span class="site-name">s7777777h's Blog</span></a><a class="nav-page-title" href="/s7777777h.github.io/"><span class="site-name">OO第二单元总结-电梯调度</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">OO第二单元总结-电梯调度</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-04-12T12:29:24.000Z" title="Created 2025-04-12 20:29:24">2025-04-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-04-14T17:36:45.127Z" title="Updated 2025-04-15 01:36:45">2025-04-15</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="umamiPV" data-path="/s7777777h.github.io/2025/04/12/OO%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93-%E7%94%B5%E6%A2%AF%E8%B0%83%E5%BA%A6/"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="题目回顾"><a href="#题目回顾" class="headerlink" title="题目回顾"></a>题目回顾</h1><h2 id="第一次题目"><a href="#第一次题目" class="headerlink" title="第一次题目"></a>第一次题目</h2><p>有 6 部电梯，在某些时间节点，会有一些乘客发出请求：乘坐指定电梯 e，从楼层 x 到楼层 y，且每个乘客有一个优先级 p。当<strong>电梯开门，关门，到达任一楼层，乘客进出电梯</strong>时，需要输出特定的信息。每一部电梯的移动速度给定，同时电梯的开关门之间有一定的时间间隔。目标是将所有乘客送到目的地（正确性），且使得系统总运行时间，乘客优先级加权等待时间，电梯耗电量（与开关门次数和移动次数有关）最小化。</p>
 <h2 id="第二次迭代"><a href="#第二次迭代" class="headerlink" title="第二次迭代"></a>第二次迭代</h2><p>乘客<strong>不再指定</strong>乘坐哪一部电梯，而是由系统自行决定。同时，新增临时调度(SCHE) 事件，要求指定电梯以特定移动速度，从楼层 x 移动到楼层 y ，到达 y 后使所有乘客离开，关门并等待一秒，结束临时调度事件。SCHE-BEGIN 必须在输入 SCHE 后短时间内输出（不能有两次 ARRIVE）。临时调度期间不能有 RECEIVE和中间楼层的开关门。 </p>
 <p>同时，新增了 RECEIVE 约束，当将乘客分给某个电梯时，要输出一条分配信息，当电梯没有任何的 RECEIVE 时，电梯不能移动（防止自由竞争策略）。</p>
 <p>RECEIVE 的解除有两种情况：当乘客离开电梯时会解除其的 RECEIVE ；电梯进入 SCHE 事件时会将所有已经 RECEIVE 的人全部解除。当RECEIVE解除后，乘客必须重新分配电梯，同时电梯如果没有RECEIVE任何人，电梯不能移动。</p>
@@ -169,7 +169,7 @@
 <blockquote>
 <p>注，此处的 Elevator 泛指六个电梯线程，而 ElevatorA，ElevatorB 主要用来展示 UPDATE 时的线程工作状况。</p>
 </blockquote>
-<h2 id="度量分析"><a href="#度量分析" class="headerlink" title="度量分析"></a>度量分析</h2><p><img src="/s7777777h.github.io/2025/04/12/OO%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93-%E7%94%B5%E6%A2%AF%E8%B0%83%E5%BA%A6/%E5%BA%A6%E9%87%8F.png"></p>
+<h2 id="度量分析"><a href="#度量分析" class="headerlink" title="度量分析"></a>度量分析</h2><p><img src="/s7777777h.github.io/2025/04/12/OO%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93-%E7%94%B5%E6%A2%AF%E8%B0%83%E5%BA%A6/%E5%BA%A6%E9%87%8F.png"> </p>
 <p><img src="/s7777777h.github.io/2025/04/12/OO%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93-%E7%94%B5%E6%A2%AF%E8%B0%83%E5%BA%A6/%E5%BA%A6%E9%87%8F1.png"></p>
 <h1 id="实现方案介绍"><a href="#实现方案介绍" class="headerlink" title="实现方案介绍"></a>实现方案介绍</h1><h2 id="线程-类介绍"><a href="#线程-类介绍" class="headerlink" title="线程&amp;类介绍"></a>线程&amp;类介绍</h2><p>线程分为三部分：输入线程（Main），分配器线程（Distributor），电梯线程（Elevator）。</p>
 <p>采用典型的<strong>生产者-消费者模式</strong>，为托盘建立 waitingList 类，用于存储管理三种类型的 Request。</p>
