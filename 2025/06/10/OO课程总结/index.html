@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>OO课程总结 | s7777777h's Blog</title><meta name="author" content="s7777777h"><meta name="copyright" content="s7777777h"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="正向建模总结本单元使用UML的方式，引导我们开展正向建模。从实际体验而言，正向建模对我的感受很奇怪：由于类图设计过程中只泛泛地写方法和成员，而没有考虑实际实现，导致在设计时很难评判自己建模方案的优劣性和可行性。从个人角度还是比较习惯直接写代码的过程，但是本单元使用正向建模后，架构在每次迭代中，相较于前几个单元变化极小（不过由于题目不一样也没什么可比性）。 架构设计类图 类图看似简单，其实内部还是有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OO课程总结">
+<meta property="og:url" content="http://s7777777h.github.io/2025/06/10/OO%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="s7777777h&#39;s Blog">
+<meta property="og:description" content="正向建模总结本单元使用UML的方式，引导我们开展正向建模。从实际体验而言，正向建模对我的感受很奇怪：由于类图设计过程中只泛泛地写方法和成员，而没有考虑实际实现，导致在设计时很难评判自己建模方案的优劣性和可行性。从个人角度还是比较习惯直接写代码的过程，但是本单元使用正向建模后，架构在每次迭代中，相较于前几个单元变化极小（不过由于题目不一样也没什么可比性）。 架构设计类图 类图看似简单，其实内部还是有">
+<meta property="og:locale">
+<meta property="og:image" content="http://s7777777h.github.io/img/butterfly-icon.png">
+<meta property="article:published_time" content="2025-06-10T05:25:33.000Z">
+<meta property="article:modified_time" content="2025-06-12T13:14:49.717Z">
+<meta property="article:author" content="s7777777h">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://s7777777h.github.io/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "OO课程总结",
+  "url": "http://s7777777h.github.io/2025/06/10/OO%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93/",
+  "image": "http://s7777777h.github.io/img/butterfly-icon.png",
+  "datePublished": "2025-06-10T05:25:33.000Z",
+  "dateModified": "2025-06-12T13:14:49.717Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "s7777777h",
+      "url": "http://s7777777h.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://s7777777h.github.io/2025/06/10/OO%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'OO课程总结',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><script defer src="https://cloud.umami.is/script.js" data-website-id="412d1717-458b-4a9d-bbbd-b4f935bba00f"></script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="s7777777h's Blog" type="application/atom+xml">
+</head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">s7777777h's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">OO课程总结</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">OO课程总结</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-06-10T05:25:33.000Z" title="Created 2025-06-10 13:25:33">2025-06-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-06-12T13:14:49.717Z" title="Updated 2025-06-12 21:14:49">2025-06-12</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="umamiPV" data-path="/2025/06/10/OO%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93/"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="正向建模总结"><a href="#正向建模总结" class="headerlink" title="正向建模总结"></a>正向建模总结</h1><p>本单元使用UML的方式，引导我们开展正向建模。从实际体验而言，正向建模对我的感受很奇怪：由于类图设计过程中只泛泛地写方法和成员，而没有考虑实际实现，导致在设计时很<strong>难评判自己建模方案的优劣性和可行性</strong>。从个人角度还是比较习惯直接写代码的过程，但是本单元使用正向建模后，架构在每次迭代中，相较于前几个单元变化极小（不过由于题目不一样也没什么可比性）。</p>
+<h1 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h1><h2 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h2><p><img src="/2025/04/06/%E5%A4%9A%E7%BA%BF%E7%A8%8BDebug%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"></p>
+<p>类图看似简单，其实内部还是有一定的思考的。</p>
+<h2 id="第一次迭代"><a href="#第一次迭代" class="headerlink" title="第一次迭代"></a>第一次迭代</h2><p>本单元目标是实现一个图书管理系统，需要模拟图书的位置，开馆闭馆和用户借阅等一系列规则。在架构设计方面，本单元最值得一提的是关于图书馆的不同部位（<code>书架，归还处，预约处，用户）</code>应当怎么管理。 </p>
+<p>一个比较清晰的方案是，将不同的地方单独建类，每个类提供方法进行书籍的移动。</p>
+<p>这个方法最为直观，但是可以优化：由于这四个地方具有很多公共方法，因此可以直接建立一个 <code>bookContainer</code> 作为这四个方法的父类进行管理。</p>
+<p>这个方法最大的优点是：架构清晰，可迭代性强。</p>
+<p>但是考虑到 <code>bookContainer</code> 这样一个容器类，其没有很复杂的方法需要实现（例如 U1 Poly 的 mul)，其主要方法都是一些 <code>getter</code>  和 <code>setter</code> ，那么为容器单独建类反而相对冗余，不如直接使用 <code>HashMap</code>，在 <code>Library</code> 内部统一管理。</p>
+<p>关于图书的位置，我并没有设计单独的类来管理，而是直接在 <code>Library</code> 中创建了多个容器来管理其位置。这样省略了非常多的代码量，能够以简洁的代码完成任务。</p>
+<h2 id="第二次迭代"><a href="#第二次迭代" class="headerlink" title="第二次迭代"></a>第二次迭代</h2><p>本次迭代增加了热门书架，阅读和归还的相关内容，实现也较为简单，只需增加新的 <code>booksInHotBookshelf</code> ，并增加对于 <code>HashSet&lt;LibraryBookIsbn&gt; hotBook</code> 等相关逻辑即可。</p>
+<h2 id="第三次迭代"><a href="#第三次迭代" class="headerlink" title="第三次迭代"></a>第三次迭代</h2><p>第三次迭代增加了信用分相关的规则体系，实现也较为简单。值得一提的地方是关于逾期书籍的扣分实现，个人推荐的方式是维护“上一次扣分的时间”，计算两次对于逾期的扣分量，计算实际的 <code>delta</code> 来扣除分数。</p>
+<h1 id="大模型辅助正向建模"><a href="#大模型辅助正向建模" class="headerlink" title="大模型辅助正向建模"></a>大模型辅助正向建模</h1><p>我并没有在建模的第一步使用大模型来辅助，而在一些具体的函数细节上使用 <code>copilot</code> 来补全函数细节。关于大模型辅助架构设计方面，由于大模型的智力已经非常高，在使用时不需要太多的提示词，我们只需将任务内容丢给大模型，可以让大模型从顶层开始建模，一步一步完善细节。</p>
+<h1 id="架构设计思维的递进"><a href="#架构设计思维的递进" class="headerlink" title="架构设计思维的递进"></a>架构设计思维的递进</h1><h2 id="第一单元"><a href="#第一单元" class="headerlink" title="第一单元"></a>第一单元</h2><p>在最初的设计时，没有过多的考虑如何为后续的实现留出迭代的接口，没有归约到统一的 <code>Poly</code> 形式，导致在第二次迭代时进行了一次重构。在第二次迭代时，为了防止以后的重构，对于引入的函数功能，单独创立了函数管理类，将功能很好的封装了起来，使用效果非常好。</p>
+<h2 id="第二单元"><a href="#第二单元" class="headerlink" title="第二单元"></a>第二单元</h2><p>第二单元架构设计使用了生产者-消费者的模式，并保留了第一单元对于特定功能单独分离的经验，将 strategy 单独设为一类，在后续迭代中这个架构设计使得增量开发极为舒适，具有很强的高内聚低耦合的特征。</p>
+<h2 id="第三单元"><a href="#第三单元" class="headerlink" title="第三单元"></a>第三单元</h2><p>第三单元由课程组直接给定了架构，这里略掉。</p>
+<h2 id="第四单元"><a href="#第四单元" class="headerlink" title="第四单元"></a>第四单元</h2><p>第四单元的架构设计看似非常简单，其实也是权衡后的结果，曾想到的 <code>bookContainer</code> 继承方案确实是一个高内聚低耦合的方案，但是对于一些简化的问题，强行按照教条来反而也没必要，通过适当的简化反而能写的更加顺心，更加方便迭代。</p>
+<h1 id="测试思维的递进"><a href="#测试思维的递进" class="headerlink" title="测试思维的递进"></a>测试思维的递进</h1><p>整个 OO 四个单元我都采取了评测机来编写，但是第一单元和二三四单元之间，我的数据生成思维得到了一些递进。</p>
+<p>由于整个OO过程中我都做了很好的测试，整个OO课程中，我没有因为WA错任何点，仅有两个TLE。</p>
+<h2 id="第一单元-1"><a href="#第一单元-1" class="headerlink" title="第一单元"></a>第一单元</h2><p>评测机的数据生成器采用纯随机的方式，导致一些极端样例（如递归程度较深）几乎不可能随机到，自己代码关于这方面却存在一些漏洞，导致在互测的时候被同房 hack</p>
+<h2 id="第二、三、四单元"><a href="#第二、三、四单元" class="headerlink" title="第二、三、四单元"></a>第二、三、四单元</h2><p>二，三、四单元开始使用基于策略的数据生成器，通过预设几种数据生成策略，让数据生成器每次从中随机选择一个，大大增加了测试覆盖率，二三次单元仅因TLE错两个点（一次是电梯效率问题，一次是Unit3 的TLE）。整体还是很不错的。</p>
+<h1 id="课程收获"><a href="#课程收获" class="headerlink" title="课程收获"></a>课程收获</h1><p>战斗，爽！</p>
+<p>在整个OOpre和OO的过程中，我的收获是相当大的，之前从来没有什么架构设计的思维，现在已经培养的相对很完善了，对于面向对象的理解也已经很深刻了，深刻的体会到了其在开发中的优点。</p>
+<p>感觉从来没有一门课能像OO让我这么尽兴了，也没想到过自己最终能拿到强测＋互测总失分只有33分左右的好成绩。</p>
+<p>整个OO过程中我都是采用相当保守的策略，适当的舍弃性能分，来保证正确性。事实证明这是相当正确的，为了微不足道的性能分需要付出相当大的工作量，甚至可能引入新的bug，没有必要人云亦云跟着别人一起卷性能。</p>
+<p>感觉OO是我上过最好的绝世好课，也希望我能当上OO助教，再陪伴OO一年~</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://s7777777h.github.io">s7777777h</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://s7777777h.github.io/2025/06/10/OO%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93/">http://s7777777h.github.io/2025/06/10/OO%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/05/13/OO%E7%AC%AC%E4%B8%89%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93-%E7%A4%BE%E4%BA%A4%E7%BD%91%E7%BB%9C/" title="OO第三单元总结-社交网络"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">OO第三单元总结-社交网络</div></div><div class="info-2"><div class="info-item-1">题目回顾：本单元的题目较为特殊,有着较少的题目描述，主要题目靠 JML 间接提供。我会将题目和官方包放在 [github 仓库](s7777777h&#x2F;BUAA-OO: buaa oo 个人代码 (github.com))中，这里不过多赘述。 第一次作业：建立一个较为朴素的社交网络，维护人际关系的整个图。 第二次作业：在网络中引入公众号和文章的概念，每个人可以加入公众号贡献文章，也可以接收文章。 第三次作业：引入消息和emoji的概念，每个人可以发送不同类型的消息，同时emoji消息会给emoji增加热度，需要进行发送Message操作和维护emoji操作。 架构设计存储方式本次作业中选取恰当的容器较为重要。对于 Unit3 而言含 id 对象使用 HashMap&lt;Integer, Object&gt; 较为合适，对于可重复的对象使用  HashMap&lt;Integer, ArrayList&lt;Object&gt;&gt; 较优。 对于 receivedArticle...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">s7777777h</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">OO Unit1/2 代码及评测机源码现已公开，欢迎前往 https://github.com/s7777777h/BUAA-OO 访问</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%AD%A3%E5%90%91%E5%BB%BA%E6%A8%A1%E6%80%BB%E7%BB%93"><span class="toc-number">1.</span> <span class="toc-text">正向建模总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.</span> <span class="toc-text">架构设计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9B%BE"><span class="toc-number">2.1.</span> <span class="toc-text">类图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%BF%AD%E4%BB%A3"><span class="toc-number">2.2.</span> <span class="toc-text">第一次迭代</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E8%BF%AD%E4%BB%A3"><span class="toc-number">2.3.</span> <span class="toc-text">第二次迭代</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AC%A1%E8%BF%AD%E4%BB%A3"><span class="toc-number">2.4.</span> <span class="toc-text">第三次迭代</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%BE%85%E5%8A%A9%E6%AD%A3%E5%90%91%E5%BB%BA%E6%A8%A1"><span class="toc-number">3.</span> <span class="toc-text">大模型辅助正向建模</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%80%9D%E7%BB%B4%E7%9A%84%E9%80%92%E8%BF%9B"><span class="toc-number">4.</span> <span class="toc-text">架构设计思维的递进</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%8D%95%E5%85%83"><span class="toc-number">4.1.</span> <span class="toc-text">第一单元</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83"><span class="toc-number">4.2.</span> <span class="toc-text">第二单元</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%8D%95%E5%85%83"><span class="toc-number">4.3.</span> <span class="toc-text">第三单元</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E5%8D%95%E5%85%83"><span class="toc-number">4.4.</span> <span class="toc-text">第四单元</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%80%9D%E7%BB%B4%E7%9A%84%E9%80%92%E8%BF%9B"><span class="toc-number">5.</span> <span class="toc-text">测试思维的递进</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%8D%95%E5%85%83-1"><span class="toc-number">5.1.</span> <span class="toc-text">第一单元</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E3%80%81%E4%B8%89%E3%80%81%E5%9B%9B%E5%8D%95%E5%85%83"><span class="toc-number">5.2.</span> <span class="toc-text">第二、三、四单元</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%BE%E7%A8%8B%E6%94%B6%E8%8E%B7"><span class="toc-number">6.</span> <span class="toc-text">课程收获</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/10/OO%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93/" title="OO课程总结">OO课程总结</a><time datetime="2025-06-10T05:25:33.000Z" title="Created 2025-06-10 13:25:33">2025-06-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/13/OO%E7%AC%AC%E4%B8%89%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93-%E7%A4%BE%E4%BA%A4%E7%BD%91%E7%BB%9C/" title="OO第三单元总结-社交网络">OO第三单元总结-社交网络</a><time datetime="2025-05-13T14:22:09.000Z" title="Created 2025-05-13 22:22:09">2025-05-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/12/OO%E7%AC%AC%E4%BA%8C%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93-%E7%94%B5%E6%A2%AF%E8%B0%83%E5%BA%A6/" title="OO第二单元总结-电梯调度">OO第二单元总结-电梯调度</a><time datetime="2025-04-12T12:29:24.000Z" title="Created 2025-04-12 20:29:24">2025-04-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/06/%E5%A4%9A%E7%BA%BF%E7%A8%8BDebug%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/" title="多线程Debug经验分享">多线程Debug经验分享</a><time datetime="2025-04-06T08:49:05.000Z" title="Created 2025-04-06 16:49:05">2025-04-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/06/OO%E7%AC%AC%E4%B8%80%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%B1%95%E5%BC%80/" title="OO第一单元总结 - 表达式展开">OO第一单元总结 - 表达式展开</a><time datetime="2025-04-06T08:33:24.000Z" title="Created 2025-04-06 16:33:24">2025-04-06</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 By s7777777h</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.0-b1</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script>(() => {
+  const option = null
+  const config = {"site_uv":true,"site_pv":true,"page_pv":true,"token":"api_ZiVdUbU4TaBNwjjkfco3FXH9xmYrke8v"}
+
+  const runTrack = () => {
+    umami.track(props => ({ ...props, url: window.location.pathname, title: GLOBAL_CONFIG_SITE.title }))
+  }
+
+  const loadUmamiJS = () => {
+    btf.getScript('https://cloud.umami.is/script.js', {
+      'data-website-id': '',
+      'data-auto-track': 'false',
+      ...option
+    }).then(runTrack)
+  }
+
+  const getData = async (isPost) => {
+    const now = Date.now()
+    const keyUrl = isPost ? `&url=${window.location.pathname}` : ''
+    const headerList = { 'Accept': 'application/json' }
+    if (false) headerList['Authorization'] = `Bearer ${config.token}`
+    else headerList['x-umami-api-key'] = config.token
+    const res = await fetch(`https://api.umami.is/v1/websites//stats?startAt=0000000000&endAt=${now}${keyUrl}`, {
+      method: "GET",
+      headers: headerList
+    })
+    return await res.json()
+  }
+
+  const insertData = async () => {
+    try {
+      if (GLOBAL_CONFIG_SITE.pageType === 'post' && config.page_pv) {
+        const pagePV = document.getElementById('umamiPV')
+        if (pagePV) {
+          const data = await getData(true)
+          pagePV.textContent = data.pageviews.value
+        }
+      } else {
+        const data = (config.site_uv || config.site_pv) && await getData()
+        if (config.site_uv) {
+          const siteUV = document.getElementById('umami-site-uv')
+          if (siteUV) siteUV.textContent = data.visitors.value
+        }
+        if (config.site_pv) {
+          const sitePV = document.getElementById('umami-site-pv')
+          if (sitePV) sitePV.textContent = data.pageviews.value
+        }
+      }
+    } catch (e) {
+      console.error('Failed to load Umami Analytics:', e)
+    }
+  }
+
+  btf.addGlobalFn('pjaxComplete', runTrack, 'umami_analytics_run_track')
+  btf.addGlobalFn('pjaxComplete', insertData, 'umami_analytics_insert')
+
+  loadUmamiJS()
+  insertData()
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
